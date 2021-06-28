@@ -1,0 +1,56 @@
+This is our make file, used to demonstrate printing a text file.
+blue: CodeX.o 
+	gcc CodeX.o -o blue
+CodeX.o: CodeX.c
+	gcc -c  CodeX.c
+	look at how I am adding random      spaces, yet this is printi    	g it really accurately
+	
+	
+	//My implementation for a Priority Queue
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct Node
+{	int data;
+	int priority;
+	struct Node *next;
+}node;
+
+//Function to create a new node given the data and priority values
+node* newnode(int d,int p)
+{	node *temp = (node*)malloc(sizeof(node));	//Allocate memory for the structure
+	temp->data=d;
+	temp->priority=p;
+	temp->next=NULL;
+	return temp;	//Assigned all the values and returned the freshly made node
+}
+
+//Function to add a node into the right position
+void push(node *head,int d,int p)
+{	node* start=head;	//another pointer to the start of the list
+	node* new=newnode(d,p);	//create a new node with the req values
+
+	if(head->priority >p)	//if priority of the first node is lesser than the one to be added,   i->b->c
+	{	new->next=head;		//the entered value now points to the start of the list i.e, becomes first element   a->b->c
+		head=new;				//head pointer points to the newly added  i->a->b->c
+	}
+	else
+	{
+		while((start->next !=NULL)&&(start->next->priority <p))
+		{		start=start->next;		}  //Move a pointer to the position the new node must be inserted
+
+		new->next =start->next;		//point new to where start is pointing
+		start->next=new;			//point start to new
+	}
+}
+
+int main()
+{	node *k =newnode(5,1);
+	push(k,4,2);
+	push(k,10,3);
+	
+	while((k!=NULL))
+	{	printf("%d\t",k->data);
+		k=k->next;
+	}
+}
+
